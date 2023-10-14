@@ -10,8 +10,9 @@ lib.addKeybind({
             title = 'Scoreboard',
             options = Players
         })
-        
+
         lib.showMenu('Scoreboard')
+        local Tags = {}
         while IsControlPressed(0, 303) do 
             Wait(1000)
             local Players = GetActivePlayers()
@@ -19,6 +20,7 @@ lib.addKeybind({
                 local TargetPlayer = Players[i]
                 if TargetPlayer ~= cache.playerId then
                     local ThisGamerTag = CreateFakeMpGamerTag(GetPlayerPed(TargetPlayer), '\n'..GetPlayerServerId(TargetPlayer), false, false, '', false)
+                    Tags[#Tags+1] = ThisGamerTag
                     if NetworkIsPlayerTalking(TargetPlayer) then
                         SetMpGamerTagAlpha(ThisGamerTag, 0, 255)
                         SetMpGamerTagColour(ThisGamerTag, 0, 18)
@@ -31,7 +33,8 @@ lib.addKeybind({
             end
         end 
         lib.hideMenu()
+        for i = 1, #Tags do 
+            RemoveMpGamerTag(Tags[i])
+        end 
     end,
 })
-
-

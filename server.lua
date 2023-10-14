@@ -4,7 +4,7 @@ local function GetPlayersForScoreboard()
     for i = 1, #xPlayers do 
         local xPlayer = xPlayers[i]
         Players[#Players+1] = {
-            label = xPlayer.name.. 'ID: ('.. xPlayer.source.. ')',
+            label = xPlayer.name.. ' ID: ('.. xPlayer.source.. ')',
             close = false 
         }
     end 
