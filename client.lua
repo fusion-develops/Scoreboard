@@ -15,21 +15,14 @@ lib.addKeybind({
         local Tags = {}
         while IsControlPressed(0, 303) do 
             Wait(1000)
-            local Players = GetActivePlayers()
+            local Players = lib.getNearbyPlayers(GetEntityCoords(cache.ped), 25.0, false)
             for i = 1, #Players do
                 local TargetPlayer = Players[i]
-                if TargetPlayer ~= cache.playerId then
-                    local ThisGamerTag = CreateFakeMpGamerTag(GetPlayerPed(TargetPlayer), '\n'..GetPlayerServerId(TargetPlayer), false, false, '', false)
-                    Tags[#Tags+1] = ThisGamerTag
-                    if NetworkIsPlayerTalking(TargetPlayer) then
-                        SetMpGamerTagAlpha(ThisGamerTag, 0, 255)
-                        SetMpGamerTagColour(ThisGamerTag, 0, 18)
-                    else
-                        SetMpGamerTagAlpha(ThisGamerTag, 0, 150)
-                        SetMpGamerTagColour(ThisGamerTag, 0, 19)
-                    end
-                    SetMpGamerTagsVisibleDistance(10.0)
-                end
+                local ThisGamerTag = CreateFakeMpGamerTag(GetPlayerPed(TargetPlayer), '\n'..GetPlayerServerId(TargetPlayer), false, false, '', false)
+                Tags[#Tags+1] = ThisGamerTag
+                SetMpGamerTagAlpha(ThisGamerTag, 0, 255)
+                SetMpGamerTagColour(ThisGamerTag, 0, 18 or NetworkIsPlayerTalking(TargetPlayer) and 19)
+                SetMpGamerTagsVisibleDistance(10.0)
             end
         end 
         lib.hideMenu()

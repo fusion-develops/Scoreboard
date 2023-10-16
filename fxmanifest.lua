@@ -1,5 +1,5 @@
 game 'gta5'
-fx_verison 'cerulean'
+fx_version 'cerulean'
 
 shared_script '@ox_lib/init.lua'
 
