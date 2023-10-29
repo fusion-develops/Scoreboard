@@ -1,15 +1,23 @@
-local function GetPlayersForScoreboard()
-    local Players = {}
-    local xPlayers = ESX.GetExtendedPlayers()
-    for i = 1, #xPlayers do 
-        local xPlayer = xPlayers[i]
-        Players[#Players+1] = {
-            label = xPlayer.name.. ' ID: ('.. xPlayer.source.. ')',
-            close = false 
-        }
+local Players = {}
+
+RegisterNetEvent('esx:playerLoaded', function(_, xPlayer)
+    Players[#Players+1] = {
+        source = xPlayer.source,
+        label = xPlayer.getName().. ' ['..xPlayer.source..']',
+        close = false
+    }
+end)
+
+RegisterNetEvent('esx:playerDropped', function(source)
+    for i = 1, #Players do 
+        local Player = Players[i]
+        if Player.source == source then 
+            Player = nil
+            break
+        end
     end 
-    return Players 
-end
+end)
 
-
-lib.callback.register('GetScoreboard', GetPlayersForScoreboard)
+lib.callback.register('GetScoreboard', function ()
+    return Players
+end)
