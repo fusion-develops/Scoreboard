@@ -1,5 +1,5 @@
 local Tags = {}
-
+local open = false
 lib.addKeybind({
     name = 'Scoreboard',
     description = 'U To Open Scoreboard',
@@ -12,22 +12,21 @@ lib.addKeybind({
             title = 'Scoreboard',
             options = Players
         })
-
+        open = not open
+        if open then 
         lib.showMenu('Scoreboard')
+        end
         CreateThread(function ()
-            while IsControlPressed(0, 303) do 
-                local Players = lib.getNearbyPlayers(GetEntityCoords(cache.ped), 25.0, false)
-                for i = 1, #Players do
+            while open do 
                     local TargetPlayer = Players[i]
                     local ThisGamerTag = CreateFakeMpGamerTag(TargetPlayer.ped, '\n'..GetPlayerServerId(TargetPlayer.id), false, false, '', false)
                     Tags[#Tags+1] = ThisGamerTag
                     SetMpGamerTagAlpha(ThisGamerTag, 0, 255)
                     SetMpGamerTagColour(ThisGamerTag, 0, 18 or NetworkIsPlayerTalking(TargetPlayer.id) and 19)
                     SetMpGamerTagsVisibleDistance(10.0)
-                end
             Wait(1000)
-            end 
-        end)
+        
+         end)
 
     end,
     onReleased = function()
