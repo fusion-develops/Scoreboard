@@ -12,7 +12,7 @@ RegisterNetEvent('esx:playerDropped', function(source)
     for i = 1, #Players do 
         local Player = Players[i]
         if Player.source == source then 
-            Player = nil
+                Players[i] = nil
             break
         end
     end 
